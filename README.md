@@ -6,7 +6,7 @@ Advent of Code solutions written in the apex predator of programming languages (
 <b>Features</b>
 - C++23
 - Makefiles
-- 🚨🚨🚨 Custom `mkday` script for all of your use-cases 🚨🚨🚨
+- 🚨🚨🚨 Custom `mkday <day>` script for all of your use-cases 🚨🚨🚨
 - Attempts clean abstractions and idiomatic c++ (with little success)
 
 ### License
