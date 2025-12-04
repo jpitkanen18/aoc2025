@@ -1,6 +1,7 @@
-CFLAGS=-03 -Wall --std=c++23
+CFLAGS=-O3 -Wall --std=c++23 -fsanitize=address
+INCLUDE=-I/opt/homebrew/Cellar/gcc/15.2.0/include/c++/15/aarch64-apple-darwin24
 
-CC=/opt/homebrew/opt/llvm@21/bin/clang++
+CC=/opt/homebrew/opt/llvm@21/bin/clang++ $(CFLAGS) $(INCLUDE)
 
 all: main.cpp
 	@echo "Compiling main.cpp"

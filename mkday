@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+if [[ $# -ne 1 ]]; then
+	echo "Usage: $0 <day_number>"
+	exit 1
+fi
+
+DAY_NUM=$1
+DIR_NAME="day${DAY_NUM}"
+
+if [[ -d "$DIR_NAME" ]]; then
+	echo "Error: Directory $DIR_NAME already exists"
+	exit 1
+fi
+
+mkdir "$DIR_NAME"
+cd "$DIR_NAME"
+
+cat > main.cpp << 'EOF'
+#include <iostream>
+
+#include "../utils/Timer.hpp"
+#include "../utils/Types.hpp"
+#include "../utils/Utils.hpp"
+
+bool part2 = false;
+
+int main(int argc, char* argv[]) {
+	StringVector input = Utils::LoadFile(argc, argv, part2);
+
+	Timer timer = Timer();
+	timer.Start();
+
+	timer.End();
+
+	return 0;
+}
+EOF
+
+cat > Makefile << 'EOF'
+include ../Base/Makefile
+
+EOF
+
+touch testinput.txt
+
+echo "Created $DIR_NAME with main.cpp, Makefile, and testinput.txt"

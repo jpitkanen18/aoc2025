@@ -4,6 +4,8 @@
 #include "../utils/Types.hpp"
 #include "../utils/Utils.hpp"
 
+bool part2 = false;
+
 class SafeCracker {
   StringVector input;
   int dial = 50;
@@ -11,13 +13,22 @@ class SafeCracker {
 
   void RotateDial(int by) {
     this->dial += by;
-    if (this->dial > 99 || this->dial < 99) {
-      this->dial = this->dial % 100;
+    if (this->dial > 99 || this->dial < 0) {
+      int mod = this->dial % 100;
+      if (mod < 0) {
+        mod += 100;
+      }
+      if (part2) {
+        int value = abs(this->dial / 100) + (mod == 0 ? -1 : 0);
+        if (this->dial < 0 && this->dial - by != 0)
+          value++;
+        password += value;
+      }
+      this->dial = mod;
     }
     if (this->dial == 0) {
       password++;
     }
-    // std::cout << "The dial is rotated by: " << by << " to : " << this->dial << '\n';
   }
 
  public:
@@ -44,7 +55,7 @@ class SafeCracker {
 };
 
 int main(int argc, char* argv[]) {
-  StringVector input = Utils::LoadFile(argc, argv);
+  StringVector input = Utils::LoadFile(argc, argv, part2);
 
   Timer timer = Timer();
   timer.Start();

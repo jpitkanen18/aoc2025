@@ -72,6 +72,11 @@
 		"list": "cpp",
 		"map": "cpp",
 		"set": "cpp",
-		"scoped_allocator": "cpp"
+		"scoped_allocator": "cpp",
+		"unordered_set": "cpp",
+		"flat_map": "cpp",
+		"flat_set": "cpp",
+		"source_location": "cpp",
+		"iostream": "cpp"
 	}
 }
