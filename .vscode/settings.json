@@ -77,6 +77,13 @@
 		"flat_map": "cpp",
 		"flat_set": "cpp",
 		"source_location": "cpp",
-		"iostream": "cpp"
+		"iostream": "cpp",
+		"chrono": "cpp",
+		"deque": "cpp",
+		"filesystem": "cpp",
+		"forward_list": "cpp",
+		"regex": "cpp",
+		"span": "cpp",
+		"stacktrace": "cpp"
 	}
 }

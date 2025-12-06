@@ -5,9 +5,14 @@
 
 using StringVector = std::vector<std::string>;
 
-struct Vec2 {
-  long x, y;
-  Vec2(long x, long y) : x(x), y(y) {}
+class Vec2 {
+ public:
+  long x;
+  long y;
+  Vec2(long x, long y) {
+    this->x = x;
+    this->y = y;
+  }
 
   friend bool operator==(Vec2 lhs, Vec2 rhs) {
     return lhs.x == rhs.x && lhs.y == rhs.y;
@@ -43,5 +48,18 @@ struct Vec3 {
     this->y += rhs.y;
     this->z += rhs.z;
     return *this;
+  }
+};
+
+struct Range {
+  long from, to;
+  Range(long from, long to) : from(from), to(to) {}
+
+  friend bool operator>(Range lhs, Range rhs) {
+    return (lhs.to - rhs.from) > (rhs.to - rhs.from);
+  }
+
+  friend bool operator==(Range lhs, Range rhs) {
+    return lhs.from == rhs.from && lhs.to == rhs.to;
   }
 };

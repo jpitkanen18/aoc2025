@@ -44,20 +44,6 @@ inline StringVector LoadFile(int argc, char* argv[], bool& part2) {
   return fileAsString;
 }
 
-inline StringVector Split(std::string& input, std::string& delimiter) {
-  StringVector splitted;
-  std::string inputCopy(input);
-  while (inputCopy.find(delimiter) != -1) {
-    std::string token = inputCopy.substr(0, inputCopy.find(delimiter));
-    splitted.push_back(token);
-    inputCopy.erase(0, inputCopy.find(delimiter) + delimiter.length());
-  }
-  if (inputCopy.size() > 0) {
-    splitted.push_back(inputCopy);
-  }
-  return splitted;
-}
-
 inline long FindAllCount(std::string& input, std::string& delimiter) {
   long count = 0;
   std::string inputCopy(input);
@@ -81,8 +67,27 @@ static long FindAllCount(std::string input, std::string delimiter) {
 }
 
 template <typename T>
-inline int IndexOf(std::vector<T>& vec, T& val, int startIndex = 0) {
+inline int IndexOf(const std::vector<T>& vec, const T& val, int startIndex = 0) {
   return distance(vec.begin(), find(vec.begin() + startIndex, vec.end(), val));
+}
+
+template <typename T>
+inline auto IiteratorIdxOf(std::vector<T>& vec, const T& val, int startIndex = 0) {
+  return find(vec.begin() + startIndex, vec.end(), val);
+}
+
+inline StringVector Split(const std::string& input, std::string& delimiter) {
+  StringVector splitted;
+  std::string inputCopy(input);
+  while (inputCopy.find(delimiter) != -1) {
+    std::string token = inputCopy.substr(0, inputCopy.find(delimiter));
+    splitted.push_back(token);
+    inputCopy.erase(0, inputCopy.find(delimiter) + delimiter.length());
+  }
+  if (inputCopy.size() > 0) {
+    splitted.push_back(inputCopy);
+  }
+  return splitted;
 }
 
 inline StringVector Split(std::string& input, const char* delimiter) {
