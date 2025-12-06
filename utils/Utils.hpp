@@ -1,10 +1,12 @@
 #pragma once
 
 #include <algorithm>
+#include <cctype>
 #include <fstream>
 #include <functional>
 #include <iostream>
 #include <iterator>
+#include <locale>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -63,6 +65,12 @@ static long FindAllCount(std::string input, std::string delimiter) {
     count++;
   }
   return count;
+}
+
+inline void LeftTrim(std::string& s) {
+  s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+            return !std::isspace(ch);
+          }));
 }
 
 template <typename T>

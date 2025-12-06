@@ -78,7 +78,7 @@ class IngrendientVerifier {
       }
     }
 #if MULTITHREAD
-// omp_destroy_lock(&writelock);
+    omp_destroy_lock(&writelock);
 #endif
   }
 

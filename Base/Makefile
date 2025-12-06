@@ -1,4 +1,5 @@
-CFLAGS=-O3 -Wall --std=c++23 -fsanitize=address -fopenmp
+CFLAGS=-O3 -Wall --std=c++23 -fopenmp 
+#-fsanitize=address
 INCLUDE=-I/opt/homebrew/Cellar/libomp/21.1.7/include
 
 CC=/opt/homebrew/opt/llvm@21/bin/clang++ $(CFLAGS) $(INCLUDE)
