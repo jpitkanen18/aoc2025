@@ -17,6 +17,9 @@ mkdir "$DIR_NAME"
 cd "$DIR_NAME"
 
 cat > main.cpp << 'EOF'
+#if MULTITHREAD
+#include <omp.h>
+#endif
 #include <iostream>
 
 #include "../utils/Timer.hpp"
@@ -39,6 +42,8 @@ EOF
 
 cat > Makefile << 'EOF'
 include ../Base/Makefile
+
+#CFLAGS +=-DMULTITHREAD
 
 EOF
 

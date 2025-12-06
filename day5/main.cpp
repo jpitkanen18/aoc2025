@@ -1,3 +1,7 @@
+#if MULTITHREAD
+#include <omp.h>
+#endif
+
 #include <iostream>
 #include <ranges>
 #include <set>
@@ -55,12 +59,27 @@ class IngrendientVerifier {
   }
 
   void Verify() {
-#pragma omp parallel for reduction(+ : nFreshIngredients)
+#if MULTITHREAD
+    omp_lock_t writelock;
+    omp_init_lock(&writelock);
+#pragma omp parallel for
+#endif
     for (const auto range : this->ranges) {
       for (const auto ing : this->ingredients) {
-        if (ing >= range.from && ing <= range.to) this->freshIngredients.insert(ing);
+        if (ing >= range.from && ing <= range.to) {
+#if MULTITHREAD
+          omp_set_lock(&writelock);
+          this->freshIngredients.insert(ing);
+          omp_unset_lock(&writelock);
+#else
+          this->freshIngredients.insert(ing);
+#endif
+        }
       }
     }
+#if MULTITHREAD
+// omp_destroy_lock(&writelock);
+#endif
   }
 
   int GetNumFreshIngredients() {
@@ -70,7 +89,11 @@ class IngrendientVerifier {
   long CalculateFreshIngredientIDs() {
     long total = 0;
     std::vector<Range> rangesProcessed;
+#if MULTITHREAD
+    omp_lock_t writelock;
+    omp_init_lock(&writelock);
 #pragma omp parallel for reduction(+ : total)
+#endif
     for (const auto& range : this->ranges) {
       bool noOverlaps = true;
       for (auto& pRange : rangesProcessed) {
@@ -89,9 +112,19 @@ class IngrendientVerifier {
       }
       if (noOverlaps) {
         total += range.to - range.from + 1;
+
+#if MULTITHREAD
+        omp_set_lock(&writelock);
         rangesProcessed.push_back(range);
+        omp_unset_lock(&writelock);
+#else
+        rangesProcessed.push_back(range);
+#endif
       }
     }
+#if MULTITHREAD
+    omp_destroy_lock(&writelock);
+#endif
     return total;
   }
 };
